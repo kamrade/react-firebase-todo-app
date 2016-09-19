@@ -3,10 +3,11 @@ import './todolist.css';
 
 var TodoList = React.createClass({
   render: function(){
+    console.log(this.props.todos);
     return(
-      <div>
-        TodoList
-      </div>
+      <ul>
+
+      </ul>
     );
   }
 });

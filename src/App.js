@@ -11,7 +11,6 @@ var App = React.createClass({
         const testRef = firebase.database().ref().child('test');
         const todosRef = firebase.database().ref().child('todos');
         testRef.on('value', snap => {
-            console.log(snap.val());
             this.setState({
                 title: snap.val()
             })
@@ -30,7 +29,9 @@ var App = React.createClass({
                 changeText={this.handlerChangeText}
                 addNewTodo={this.handlerAddNewTodo}
             />
-            <TodoList />
+            <TodoList
+                {...this.state}
+            />
             </div>
         );
     },
