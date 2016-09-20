@@ -3,7 +3,6 @@ import './todolist.css';
 
 var TodoList = React.createClass({
   render: function(){
-    console.log(this.props.todos);
     return(
       <ul>
 

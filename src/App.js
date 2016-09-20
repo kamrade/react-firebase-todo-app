@@ -8,9 +8,9 @@ import * as firebase from 'firebase';
 
 var App = React.createClass({
     componentDidMount: function(){
-        const testRef = firebase.database().ref().child('test');
+        const titleRef = firebase.database().ref().child('title');
         const todosRef = firebase.database().ref().child('todos');
-        testRef.on('value', snap => {
+        titleRef.on('value', snap => {
             this.setState({
                 title: snap.val()
             })
@@ -23,23 +23,31 @@ var App = React.createClass({
 
     },
     render: function(){
+        var title = "Default title";
+        if(this.state){
+            title = this.state.title;
+        }
         return(
             <div>
-            <TodoForm
-                changeText={this.handlerChangeText}
-                addNewTodo={this.handlerAddNewTodo}
-            />
-            <TodoList
-                {...this.state}
-            />
+                <h1 className="title">{ title }</h1>
+                <TodoForm
+                    changeText={this.handlerChangeText}
+                    addNewTodo={this.handlerAddNewTodo}
+                />
+                <TodoList
+                    {...this.state}
+                />
             </div>
         );
     },
-    handlerAddNewTodo: function(newTodo){
-        const todosRef = firebase.database().ref().child('todos');
-        const createNewTodo = todosRef.push();
-        createNewTodo.set({"id": new Date().getTime(), "text": newTodo});
-        const path = createNewTodo.toString();
+    handlerAddNewTodo: function(newValue){
+        // меняем заголовок
+        const titleRef = firebase.database().ref().child('title');
+        titleRef.set(newValue);
+
+        // const createNewTodo = todosRef.push();
+        // createNewTodo.set({"id": new Date().getTime(), "text": newTodo});
+        // const path = createNewTodo.toString();
     },
     handlerChangeText: function(text){
         this.setState({text: text});
