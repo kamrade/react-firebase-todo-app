@@ -5,7 +5,6 @@ var AnimalsForm = React.createClass({
     render: function(){
         return(
             <div>
-
                 <form onSubmit={this.onBearSubmit}>
                     <div className="form-group bears-form">
                         <h3>This is bears form</h3>
@@ -21,7 +20,6 @@ var AnimalsForm = React.createClass({
                         <input type="text" ref="rabbit" className="form-control new-rabbit" onChange={this.onChangeRabbit}/></label>
                     </div>
                 </form>
-
             </div>
         );
     },
@@ -36,8 +34,6 @@ var AnimalsForm = React.createClass({
         const newBear = this.refs.bear.value.trim();
         this.refs.bear.value = "";
 
-        // this.props.addNewTodo( this.refs.text.value.trim() );
-        // this.refs.text.value = "";
     }
 });
 

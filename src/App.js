@@ -8,23 +8,8 @@ import * as firebase from 'firebase';
 
 var App = React.createClass({
     componentWillMount: function(){
-        const testRef = firebase.database().ref().child('test');
-        // const todosRef = firebase.database().ref().child('todos');
         const rabbitRef = firebase.database().ref().child('rabbit');
 
-        // title
-        testRef.on('value', snap => {
-            this.setState({
-                title: snap.val()
-            })
-        });
-
-        // todos
-        // todosRef.on('value', snap => {
-        //     this.setState({
-        //         todos: snap.val()
-        //     })
-        // });
 
         // rabbit
         rabbitRef.on('value', snap => {
@@ -41,12 +26,10 @@ var App = React.createClass({
             <div>
             <AnimalsForm
                 changeBear={this.handlerChangeBear}
-                // addNewTodo={this.handlerAddNewTodo}
                 changeRabbit={this.handlerChangeRabbit}
             />
             <AnimalsList
                 {...this.state}
-                deleteTodo={this.handlerDeleteTodo}
             />
             </div>
         );
@@ -60,20 +43,6 @@ var App = React.createClass({
     handlerChangeBear: function(bear){
         this.setState({bear: bear});
     }
-
-
-
-    // handlerDeleteTodo: function(deleteTodoId){
-    //     console.log(deleteTodoId);
-    // },
-
-    // handlerAddNewTodo: function(newTodo){
-    //     const todosRef = firebase.database().ref().child('todos');
-    //     const createNewTodo = todosRef.push();
-    //     createNewTodo.set({"id": new Date().getTime(), "text": newTodo});
-    //     const path = createNewTodo.toString();
-    // }
-
 
 });
 
