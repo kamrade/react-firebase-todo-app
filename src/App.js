@@ -1,49 +1,80 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from './img/logo.svg';
 import './App.css';
-import TodoForm from './components/todoform';
-import TodoList from './components/todolist';
+import AnimalsForm from './components/animalsForm';
+import AnimalsList from './components/animalsList';
 
 import * as firebase from 'firebase';
 
 var App = React.createClass({
-    componentDidMount: function(){
+    componentWillMount: function(){
         const testRef = firebase.database().ref().child('test');
-        const todosRef = firebase.database().ref().child('todos');
+        // const todosRef = firebase.database().ref().child('todos');
+        const rabbitRef = firebase.database().ref().child('rabbit');
+
+        // title
         testRef.on('value', snap => {
             this.setState({
                 title: snap.val()
             })
         });
-        todosRef.on('value', snap => {
+
+        // todos
+        // todosRef.on('value', snap => {
+        //     this.setState({
+        //         todos: snap.val()
+        //     })
+        // });
+
+        // rabbit
+        rabbitRef.on('value', snap => {
             this.setState({
-                todos: snap.val()
+                rabbit: snap.val()
             })
+        }, function(errorObject){
+            console.log("fail: " + errorObject.code);
         });
 
     },
     render: function(){
         return(
             <div>
-            <TodoForm
-                changeText={this.handlerChangeText}
-                addNewTodo={this.handlerAddNewTodo}
+            <AnimalsForm
+                changeBear={this.handlerChangeBear}
+                // addNewTodo={this.handlerAddNewTodo}
+                changeRabbit={this.handlerChangeRabbit}
             />
-            <TodoList
+            <AnimalsList
                 {...this.state}
+                deleteTodo={this.handlerDeleteTodo}
             />
             </div>
         );
     },
-    handlerAddNewTodo: function(newTodo){
-        const todosRef = firebase.database().ref().child('todos');
-        const createNewTodo = todosRef.push();
-        createNewTodo.set({"id": new Date().getTime(), "text": newTodo});
-        const path = createNewTodo.toString();
+
+    // handlers
+    handlerChangeRabbit: function(rabbit){
+        const rabbitRef = firebase.database().ref().child('rabbit');
+        rabbitRef.set(rabbit);
     },
-    handlerChangeText: function(text){
-        this.setState({text: text});
+    handlerChangeBear: function(bear){
+        this.setState({bear: bear});
     }
+
+
+
+    // handlerDeleteTodo: function(deleteTodoId){
+    //     console.log(deleteTodoId);
+    // },
+
+    // handlerAddNewTodo: function(newTodo){
+    //     const todosRef = firebase.database().ref().child('todos');
+    //     const createNewTodo = todosRef.push();
+    //     createNewTodo.set({"id": new Date().getTime(), "text": newTodo});
+    //     const path = createNewTodo.toString();
+    // }
+
+
 });
 
 export default App;
